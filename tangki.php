@@ -42,6 +42,15 @@ INNER JOIN tb_act ON tb_tank.status = tb_act.id
         return $dataRef;
     }
 
+    public function getPlan(){
+        // $sth = $this->DBH->prepare('SELECT id,tank,level,max_level,pa,max_pa,status,time,deadstok,sisipan FROM tb_tank');
+        $sth = $this->DBH->prepare('SELECT tb_plan.* FROM tb_plan GROUP BY tb_plan.id DESC limit 1');
+        $sth->execute();
+
+        $dataPlan = $sth->fetchAll();
+        return $dataPlan;
+    }
+
     public function get($tank_id){
         $sth = $this->DBH->prepare('SELECT id,tank,level,max_level,pa,max_pa,status,time,deadstok,sisipan FROM tb_tank WHERE id = ?');
         $sth->execute(array($tank_id));

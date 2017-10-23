@@ -227,9 +227,10 @@ $dataRef = $refuler->getRefAll();
 									if (count($data)):
 										foreach ($data as $key => $value):
 								?>	
-								<div id="tangki-<?php echo $value['id'] ?>" class="progress progress-striped vertical bottom wide" style="width:95px;">
-									<div class="progress-bar progress-bar-info" data-transitiongoal="<?php echo $value['pa'] / $value['max_pa']*100 ?>"></div>
-									<span class="nama-tangki"><?php echo '<b>'.$value['tank'].'</b>' ?></span>
+								<div id="tangki-<?php echo $value['id'] ?>" class="progress progress-striped vertical bottom wide" style="width:95px;">		
+									<div class="progress-bar progress-bar-info" data-transitiongoal="<?php echo $value['pa'] / $value['max_pa']*100 ?>" ></div>
+									<span class="nama-tangki"><?php echo '<b>'.$value['tank'].':</b>' ?></span>
+									<span class="nama-tangki"><?php echo '<b>'.$value['pa'].'</b>' ?></span>
 								</div>
 								
 								<?php
@@ -249,7 +250,7 @@ $dataRef = $refuler->getRefAll();
 										<th>Pumpable</th>
 										<th>Status</th>
 										<th>Target Pa</th>
-										 <th>Level</th>
+										 <!-- <th>Level</th> -->
 										<!--<th>Max Level</th> -->
 										<th>Max Pumpable</th>
 										<th>Upd Terakhir</th>
@@ -266,7 +267,7 @@ $dataRef = $refuler->getRefAll();
 												<td><?php echo $value['pa'] ?></td>
 												<td><?php echo $value['statusnya'] ?></td>
 												<td><?php echo $value['patarget'] ?></td>
-												 <td><?php echo $value['level'] ?></td>
+												 <!-- <td><?php echo $value['level'] ?></td> -->
 												<!-- <td><?php echo $value['max_level'] ?></td> -->
 												<td><?php echo $value['max_pa'] ?></td>
 												<td><?php echo $value['time'] ?></td>
@@ -409,6 +410,16 @@ $dataRef = $refuler->getRefAll();
 				]
 			});
 		});
+
+	
+		$(document).ready(function() {
+		$('.progress .progress-bar').progressbar({
+			transition_delay: 300,
+			refresh_speed: 50,
+			display_text: 'none',
+			use_percentage: false
+		});
+	});
 
 	</script>
 </body>

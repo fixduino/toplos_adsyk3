@@ -15,7 +15,8 @@ $tangki = new Tangki();
 $data = $tangki->getAll();
 // $data = $tangki->getAll();
 
-
+$planthisday = new Tangki();
+$dataPlan = $planthisday->getPlan();
 
 include 'admin/config.php';
 ?>
@@ -258,7 +259,7 @@ include 'admin/config.php';
 								<div class="input-group">
 						
 								<span class="input-group-addon danger"><?php echo $value['tank'] ?></span>
-								<input class="form-control" type="text" value="<?php echo $value['patarget']; echo"/"; echo $value['pa']; ?>" >
+								<input class="form-control" type="text" value="<?php echo $value['patarget']; echo"/"; echo $value['pa']; ?>" disabled>
 								<span class="input-group-addon danger">Liter</span>
 								</div>
 								<br>
@@ -270,13 +271,16 @@ include 'admin/config.php';
 								?>
 							<div class="form-group">
 							<span class="help-block">cth. 500/2500</span>
-							<span class="help-block"> 500L dari Total Pa 2500L (red)</span>
+							<span class="help-block"> sisa 500L, dari Total Pa 2500L.</span>
 							</div>
 							<div class="input-group">
 								<!-- <span class="input-group-addon">T08</span>
 								<input class="form-control" type="text">
                                 <span class="input-group-addon">Liter</span> -->
-                                <input type="submit" class="btn btn-primary" value="Update">
+								<input type="submit" class="btn btn-info" value="Update" data-toggle="modal" data-target="#myModalPa">
+								<!-- <button style="margin-bottom:20px" data-toggle="modal" data-target="#myModalPa" class="btn btn-info col-md-2"><span class="glyphicon glyphicon-plus"></span></button> -->
+
+                                <!-- <input type="" class="btn btn-primary" value="Create"> -->
 							</div>
 								
 						</div>
@@ -290,14 +294,24 @@ include 'admin/config.php';
 								<div class="input-group">
 									<span class="input-group-btn"><button class="btn btn-success" type="button">Plan Id</button>
 									</span>
+									<?php
+									if (count($dataPlan)):
+										foreach ($dataPlan as $key => $value):
+								?>	
+								
+									
+
+								
 									<input class="form-control" type="text" 
-									value="<?php $start = 'PTMADS';
-									$characters = array_merge(range('0','9')); //range('A','Z'), 
-									for ($i = 0; $i < 6; $i++) {
-										$rand = mt_rand(0, count($characters)-1);
-										$start .= $characters[$rand];
-									}
-									echo $start;
+									value="<?php echo $value['planid'] ?>
+									<?php 
+									//$start = 'PTMADS';
+									// $characters = array_merge(range('0','9')); //range('A','Z'), 
+									// for ($i = 0; $i < 6; $i++) {
+									// 	$rand = mt_rand(0, count($characters)-1);
+									// 	$start .= $characters[$rand];
+									// }
+									// echo $start;
 									?>"  disabled>
 									
 								</div>
@@ -307,13 +321,13 @@ include 'admin/config.php';
 									<span class="help-block">cth. 1-2-3</span>
 								</div>
 								<div class="input-group">
-									<span class="input-group-btn"><button class="btn btn-success" type="button">Topping</button></span>
-									<input class="form-control" type="text">
+									<span class="input-group-btn"><button class="btn btn-success" type="button" >Tank Topping</button></span>
+									<input class="form-control" type="text" value="<?php echo $value['tanktop'] ?>" disabled>
 								</div>
 								<br>
 								<div class="input-group">
-									<span class="input-group-btn"><button class="btn btn-success" type="button">Lossing</button></span>
-									<input class="form-control" type="text">
+									<span class="input-group-btn"><button class="btn btn-success" type="button">Tank Lossing</button></span>
+									<input class="form-control" type="text" value="<?php echo $value['tanklos'] ?>" disabled>
 								</div>
 								<br>
 								<span class="">Setting Planing Quantity (L)</span>
@@ -321,13 +335,13 @@ include 'admin/config.php';
 									<span class="help-block">cth. 4000</span>
 								</div>
 								<div class="input-group">
-									<span class="input-group-btn"><button class="btn btn-success" type="button">Topping (L)</button></span>
-									<input class="form-control" type="text">
+									<span class="input-group-btn"><button class="btn btn-success" type="button">Qty Topping (L)</button></span>
+									<input class="form-control" type="text" value="<?php echo $value['qtytop'] ?>" disabled>
 								</div>
 								<br>
 								<div class="input-group">
-									<span class="input-group-btn"><button class="btn btn-success" type="button">Lossing (L)</button></span>
-									<input class="form-control" type="text">
+									<span class="input-group-btn"><button class="btn btn-success" type="button">Qty Lossing (L)</button></span>
+									<input class="form-control" type="text" value="<?php echo $value['qtylos'] ?>" disabled>
 								</div>
 								<br>
 								
@@ -340,28 +354,144 @@ include 'admin/config.php';
 								<br>
 								<div class="input-group">
 									<span class="input-group-btn"><button class="btn btn-success" type="button">Tangki (L)</button></span>
-									<input class="form-control" type="text">
+									<input class="form-control" type="text" value="<?php echo $value['tankmaint'] ?>" disabled>
 								</div>
 								<div class="form-group">
 									<span class="help-block">cth. 6,7,8</span>
 								</div>
 								<div class="input-group">
 									<span class="input-group-btn"><button class="btn btn-success" type="button">Refuler (L)</button></span>
-									<input class="form-control" type="text">
+									<input class="form-control" type="text" value="<?php echo $value['refmaint'] ?>" disabled>
 								</div>
 								<div class="form-group">
 									<span class="help-block">cth. 2,3,4</span>
 								</div>
 								<div class="input-group">
-								<input type="submit" class="btn btn-primary" value="Create">
+								<!-- <input type="submit" class="btn btn-primary" value="Create"> -->
+								<!-- <button style="margin-bottom:20px" data-toggle="modal" data-target="#myModal" class="btn btn-info col-md-2"><span class="glyphicon glyphicon-plus"></span></button> -->
+								<input type="submit" class="btn btn-info" value="Update" data-toggle="modal" data-target="#myModal">
 								
                                 <!-- <input type="" class="btn btn-primary" value="Create"> -->
 								</div>
+								<?php
+									endforeach;
+								endif;
+								?>
 							</div>		
 												
 						</div>
 					</div>
 				
+<!-- modal input -->
+<div id="myModal" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Plan Hari ini</h4>
+			</div>
+			<div class="modal-body">
+				<form action="tmb_plan_act.php" method="post">
+					<div class="form-group">
+						<label>Plan Id</label>
+						<input name="planid" type="text" class="form-control" placeholder="Plan Id" value="<?php 
+									$start = 'PTMADS';
+									$characters = array_merge(range('0','9')); //range('A','Z'), 
+									for ($i = 0; $i < 6; $i++) {
+										$rand = mt_rand(0, count($characters)-1);
+										$start .= $characters[$rand];
+									}
+									echo $start;
+									?>" >
+					</div>
+					<div class="form-group">
+						<label>Tangki Top</label>
+						<input name="deretTop" type="text" class="form-control" placeholder="Deret Tangki Topping">
+					</div>
+					<div class="form-group">
+						<label>Tangki Los</label>
+						<input name="deretLos" type="text" class="form-control" placeholder="Deret Tangki Lossing">
+					</div>
+					<div class="form-group">
+						<label>Qty Top</label>
+						<input name="qtyTop" type="text" class="form-control" placeholder="Quantity Topping">
+					</div>	
+					<div class="form-group">
+						<label>Qty Los</label>
+						<input name="qtyLos" type="text" class="form-control" placeholder="Quantity Lossing">
+					</div>	
+					<div class="form-group">
+						<label>Tangki Maint</label>
+						<input name="tankm" type="text" class="form-control" placeholder="Deret Tangki Maintenance">
+					</div>																	
+					<div class="form-group">
+						<label>Refuler Maint</label>
+						<input name="refm" type="text" class="form-control" placeholder="Deret Tangki Maintenance">
+					</div>																	
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+					<input type="submit" class="btn btn-primary" value="Simpan">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<!-- modal input -->
+<div id="myModalPa" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Plan Hari ini</h4>
+			</div>
+			<div class="modal-body">
+				<form action="tmb_brg_act.php" method="post">
+					<div class="panel-content">
+						<h2 class="heading"><i class="fa fa-database"></i> Setup Tangki</h2>
+						
+						<?php
+								if (count($data)):
+									foreach ($data as $key => $value):
+							?>	
+							<div class="input-group">
+					
+							<span class="input-group-addon danger"><?php echo $value['tank'] ?></span>
+							<input class="form-control" type="text" value="<?php echo $value['patarget']; echo"/"; echo $value['pa']; ?>" >
+							<span class="input-group-addon danger">Liter</span>
+							</div>
+							<br>
+								
+
+							<?php
+								endforeach;
+							endif;
+							?>
+						<div class="form-group">
+						<span class="help-block">cth. 500/2500</span>
+						<span class="help-block"> sisa 500L, dari Total Pa 2500L.</span>
+						</div>
+						<div class="input-group">
+							<!-- <span class="input-group-addon">T08</span>
+							<input class="form-control" type="text">
+							<span class="input-group-addon">Liter</span> -->
+							<!-- <input type="submit" class="btn btn-info" value="Update" data-toggle="modal" data-target="#myModalPa"> -->
+							<!-- <button style="margin-bottom:20px" data-toggle="modal" data-target="#myModalPa" class="btn btn-info col-md-2"><span class="glyphicon glyphicon-plus"></span></button> -->
+
+							<!-- <input type="" class="btn btn-primary" value="Create"> -->
+						</div>
+						
+					</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+					<input type="submit" class="btn btn-primary" value="Simpan">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
 						<!-- END BOOTSTRAP PROGRESS BARS -->
                         <!-- example
                     

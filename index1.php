@@ -12,6 +12,7 @@ date_default_timezone_set('Asia/Jakarta');
 require_once 'DBConnect.php';
 // require_once 'tangki.php';
 require_once 'topping.php';
+require_once 'tangki.php';
 $topping = new Topping();
 $data = $topping->get4();
 
@@ -30,6 +31,8 @@ $dataLosLain = $losD ->getLosLain();
 $totalTopE = new Topping();
 $dataTotalTop = $totalTopE ->getTotalTop();
 
+$planthisday = new Tangki();
+$dataPlan = $planthisday->getPlan();
 
 ?>
 
@@ -351,13 +354,17 @@ $dataTotalTop = $totalTopE ->getTotalTop();
 								<h2 class="heading"><i class="fa fa-square"></i> Rencana Hari Ini</h2>
 								<ul class="list-unstyled list-referrals">
 									<li>
-										<p><span class="value">3,454 KL</span><span class="text-muted">Topping</span></p>
+									<?php
+									if (count($dataPlan)):
+										foreach ($dataPlan as $key => $value):
+								?>	
+										<p><span class="value"><?php echo $value['qtytop'] ?> L</span><span class="text-muted">Topping</span></p>
 										<div class="progress progress-xs progress-transparent custom-color-blue">
 											<div class="progress-bar" data-transitiongoal="87"></div>
 										</div>
 									</li>
 									<li>
-										<p><span class="value">2,102 KL</span><span class="text-muted">Lossing</span></p>
+										<p><span class="value"><?php echo $value['qtylos'] ?> L</span><span class="text-muted">Lossing</span></p>
 										<div class="progress progress-xs progress-transparent custom-color-purple">
 											<div class="progress-bar" data-transitiongoal="34"></div>
 										</div>
@@ -374,6 +381,11 @@ $dataTotalTop = $totalTopE ->getTotalTop();
 											<div class="progress-bar" data-transitiongoal="54"></div>
 										</div>
 									</li>
+
+									<?php
+									endforeach;
+								endif;
+								?>
 								</ul>
 							</div>
 							<!-- END REFERRALS -->

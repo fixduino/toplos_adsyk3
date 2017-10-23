@@ -2,7 +2,7 @@
 <?php
    date_default_timezone_set('Asia/Jakarta');
    include("dbcon.php");
-
+//token&deretTop&deretLos
   if(isset($_GET['token'])and($_GET['deretTop']) and($_GET['deretLos'])) {
 	$s = time ();
 	$dt1=date("H:i:s",$s);
