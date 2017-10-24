@@ -354,7 +354,7 @@ include 'admin/config.php';
 									?>	
 							<form action="tmb_loss_act.php" method="post">	
 								<div class="input-group">
-									<span class="input-group-btn"><button class="btn btn-warning" type="button" >Time</button></span>
+									<span class="input-group-btn"><button class="btn btn-warning" type="button" >Last Update</button></span>
 									<input class="form-control" type="text" value="<?php echo $value['time'] ?>" disabled>
 								</div>
 								<br>
