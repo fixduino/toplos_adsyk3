@@ -31,8 +31,16 @@ $dataLosLain = $losD ->getLosLain();
 $totalTopE = new Topping();
 $dataTotalTop = $totalTopE ->getTotalTop();
 
+$totalLosF = new Topping();
+$dataTotalLos = $totalLosF ->getTotalLos();
+
 $planthisday = new Tangki();
 $dataPlan = $planthisday->getPlan();
+
+$tankMaint = new Topping();
+$dataTotalTankM = $tankMaint->getTotalTankM();
+$refMaint = new Topping();
+$dataTotalRefM = $refMaint->getTotalRefM();
 
 ?>
 
@@ -254,7 +262,7 @@ $dataPlan = $planthisday->getPlan();
 									if (count($dataTotalTop)):
 										foreach ($dataTotalTop as $key => $value):
 									?>							
-										<div class="number"><span><?php echo '<b>'.$value['totaltop'].'</b>' ?> L</span> <span>Total Topping</span></div>
+										<div class="number"><span><?php if ($value['totaltop']==null){echo '<b>0</b>';} echo '<b>'.$value['totaltop'].'</b>'; ?> L</span> <span>Total Topping</span></div>
 									<?php
 									endforeach;
 									endif;
@@ -269,7 +277,17 @@ $dataPlan = $planthisday->getPlan();
 										<img src="./assets/img/lossing.png" class="img-rounded" alt="Topping" width="30%" height="30%"> 
 										
 									</div>
-									<div class="number"><span>0 L</span> <span>Total Lossing</span></div>
+									<!-- <div class="number"><span>0 L</span> <span>Total Lossing</span></div> -->
+									<?php
+									if (count($dataTotalLos)):
+										foreach ($dataTotalLos as $key => $value):
+									?>							
+										<div class="number"><span><?php if ($value['totallos']==null){echo '<b>0</b>';} echo '<b>'.$value['totallos'].'</b>'; ?> L</span> <span>Total Lossing</span></div>
+									<?php
+									endforeach;
+									endif;
+									?>
+
 								</div>
 							</div>
 							<div class="col-md-3 col-sm-6">
@@ -370,16 +388,32 @@ $dataPlan = $planthisday->getPlan();
 										</div>
 									</li>
 									<li>
-										<p><span class="value">1 unit </span><span class="text-muted">Tank on Maintenance</span></p>
+									<?php
+										if (count($dataTotalTankM)):
+										foreach ($dataTotalTankM as $key => $value):
+									?>	
+										<p><span class="value"><?php echo $value['totTankM'] ?> unit </span><span class="text-muted">Tank on Maintenance</span></p>
 										<div class="progress progress-xs progress-transparent custom-color-yellow">
 											<div class="progress-bar" data-transitiongoal="54"></div>
 										</div>
+											<?php
+										endforeach;
+										endif;
+										?>
 									</li>
 									<li>
-										<p><span class="value">2 unit</span><span class="text-muted">Refuler on Maintenance</span></p>
+									<?php
+										if (count($dataTotalRefM)):
+										foreach ($dataTotalRefM as $key => $value):
+									?>
+										<p><span class="value"><?php echo $value['totRefM'] ?> unit</span><span class="text-muted">Refuler on Maintenance</span></p>
 										<div class="progress progress-xs progress-transparent custom-color-orange">
 											<div class="progress-bar" data-transitiongoal="54"></div>
 										</div>
+										<?php
+										endforeach;
+										endif;
+										?>
 									</li>
 
 									<?php
@@ -410,7 +444,7 @@ $dataPlan = $planthisday->getPlan();
 													foreach($data as $key => $value):
 											?>
 											<tr id="<?php echo $value['id']?>">
-												<td>REF <?php echo $value['ref']?></td>
+												<td>REF <?php echo $value['refnya']?></td>
 												<td><?php echo $value['qty_req']?> KL</td>
 												<td><?php echo $value['tank_asal']?></td>
 											</tr>

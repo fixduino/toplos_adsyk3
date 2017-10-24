@@ -18,6 +18,9 @@ $data = $tangki->getAll();
 $planthisday = new Tangki();
 $dataPlan = $planthisday->getPlan();
 
+$lossthisday = new Tangki();
+$dataLoss = $lossthisday->getLoss();
+
 include 'admin/config.php';
 ?>
 <head>
@@ -271,7 +274,7 @@ include 'admin/config.php';
 								?>
 							<div class="form-group">
 							<span class="help-block">cth. 500/2500</span>
-							<span class="help-block"> sisa 500L, dari Total Pa 2500L.</span>
+							<span class="help-block"> target sisa 500L, dari Total Pa Actual 2500L.</span>
 							</div>
 							<div class="input-group">
 								<!-- <span class="input-group-addon">T08</span>
@@ -287,39 +290,14 @@ include 'admin/config.php';
                     </div>
                     
                     
-                    <div class="col-md-9">
+                    <div class="col-md-4">
 						<div class="panel-content">
 							<h2 class="heading"><i class="fa fa-square"></i> Plan this day!</h2>
-							<div class="col-md-6">
-								<div class="input-group">
-									<span class="input-group-btn"><button class="btn btn-success" type="button">Plan Id</button>
-									</span>
-									<?php
+							<?php
 									if (count($dataPlan)):
 										foreach ($dataPlan as $key => $value):
-								?>	
-								
-									
-
-								
-									<input class="form-control" type="text" 
-									value="<?php echo $value['planid'] ?>
-									<?php 
-									//$start = 'PTMADS';
-									// $characters = array_merge(range('0','9')); //range('A','Z'), 
-									// for ($i = 0; $i < 6; $i++) {
-									// 	$rand = mt_rand(0, count($characters)-1);
-									// 	$start .= $characters[$rand];
-									// }
-									// echo $start;
-									?>"  disabled>
-									
-								</div>
-								<br>
-								<span class="">Setting Deret Tangki</span>
-								<div class="form-group">
-									<span class="help-block">cth. 1-2-3</span>
-								</div>
+								?>		
+							
 								<div class="input-group">
 									<span class="input-group-btn"><button class="btn btn-success" type="button" >Tank Topping</button></span>
 									<input class="form-control" type="text" value="<?php echo $value['tanktop'] ?>" disabled>
@@ -330,12 +308,8 @@ include 'admin/config.php';
 									<input class="form-control" type="text" value="<?php echo $value['tanklos'] ?>" disabled>
 								</div>
 								<br>
-								<span class="">Setting Planing Quantity (L)</span>
-								<div class="form-group">
-									<span class="help-block">cth. 4000</span>
-								</div>
 								<div class="input-group">
-									<span class="input-group-btn"><button class="btn btn-success" type="button">Qty Topping (L)</button></span>
+									<span class="input-group-btn"><button class="btn btn-success" type="button"> Qty Topping (L)</button></span>
 									<input class="form-control" type="text" value="<?php echo $value['qtytop'] ?>" disabled>
 								</div>
 								<br>
@@ -344,41 +318,73 @@ include 'admin/config.php';
 									<input class="form-control" type="text" value="<?php echo $value['qtylos'] ?>" disabled>
 								</div>
 								<br>
-								
-							</div>
-							<div class="col-md-6">
-								
-								<span class="">Maintenance Tangki dan refuler</span>
-
-								<br>
-								<br>
 								<div class="input-group">
-									<span class="input-group-btn"><button class="btn btn-success" type="button">Tangki (L)</button></span>
+									<span class="input-group-btn"><button class="btn btn-success" type="button">Tangki Maint.</button></span>
 									<input class="form-control" type="text" value="<?php echo $value['tankmaint'] ?>" disabled>
 								</div>
-								<div class="form-group">
-									<span class="help-block">cth. 6,7,8</span>
-								</div>
+								<br>
 								<div class="input-group">
-									<span class="input-group-btn"><button class="btn btn-success" type="button">Refuler (L)</button></span>
+									<span class="input-group-btn"><button class="btn btn-success" type="button">Refuler Maint.</button></span>
 									<input class="form-control" type="text" value="<?php echo $value['refmaint'] ?>" disabled>
 								</div>
-								<div class="form-group">
-									<span class="help-block">cth. 2,3,4</span>
-								</div>
+								<br>
 								<div class="input-group">
-								<!-- <input type="submit" class="btn btn-primary" value="Create"> -->
-								<!-- <button style="margin-bottom:20px" data-toggle="modal" data-target="#myModal" class="btn btn-info col-md-2"><span class="glyphicon glyphicon-plus"></span></button> -->
-								<input type="submit" class="btn btn-info" value="Update" data-toggle="modal" data-target="#myModal">
-								
-                                <!-- <input type="" class="btn btn-primary" value="Create"> -->
+									<input type="submit" class="btn btn-info" value="Update" data-toggle="modal" data-target="#myModal">
+									<div class="input-group">
+									<!-- <input type="submit" class="btn btn-info" value="Update" data-toggle="modal" data-target="#myModalLos"> -->
+									<!-- <input type="submit" class="btn btn-info" value="Update3" data-toggle="modal" data-target="#myModalLoss"> -->
+								</div>
 								</div>
 								<?php
 									endforeach;
 								endif;
 								?>
-							</div>		
-												
+								
+							
+										
+						</div>
+					</div>
+
+					<div class="col-md-4">
+						<div class="panel-content">
+							<h2 class="heading"><i class="fa fa-square"></i> Input Lossing!</h2>
+							<?php
+									if (count($dataLoss)):
+										foreach ($dataLoss as $key => $value):
+									?>	
+							<form action="tmb_loss_act.php" method="post">	
+								<div class="input-group">
+									<span class="input-group-btn"><button class="btn btn-warning" type="button" >Time</button></span>
+									<input class="form-control" type="text" value="<?php echo $value['time'] ?>" disabled>
+								</div>
+								<br>
+								<div class="input-group">
+									<span class="input-group-btn"><button class="btn btn-warning" type="button" >Quantity</button></span>
+									<input name="qty_req" class="form-control" type="text" value="<?php echo $value['qty_req'] ?>" >
+								</div>
+								<br>
+								<div class="input-group">
+									<span class="input-group-btn"><button class="btn btn-warning" type="button" >Refuler</button></span>
+									<input name="ref" class="form-control" type="text" value="<?php echo $value['ref'] ?>" >
+								</div>
+								<br>
+								<div class="input-group">
+									<span class="input-group-btn"><button class="btn btn-warning" type="button" >Tangki</button></span>
+									<input name ="tank_tujuan" class="form-control" type="text" value="<?php echo $value['tank_tujuan'] ?>" >
+								</div>
+								<br>
+								
+								<div class="input-group">
+									<!-- <input type="submit" class="btn btn-info" value="Update" data-toggle="modal" data-target="#myModalLos"> -->
+									<input type="submit" class="btn btn-info" value="Update" data-toggle="modal" data-target="#myModalLoss">
+								</div>
+								<?php
+									endforeach;
+								endif;
+								?>
+								</form>		
+							
+										
 						</div>
 					</div>
 				
@@ -392,42 +398,50 @@ include 'admin/config.php';
 			</div>
 			<div class="modal-body">
 				<form action="tmb_plan_act.php" method="post">
-					<div class="form-group">
+					<!-- <div class="form-group">
 						<label>Plan Id</label>
 						<input name="planid" type="text" class="form-control" placeholder="Plan Id" value="<?php 
-									$start = 'PTMADS';
-									$characters = array_merge(range('0','9')); //range('A','Z'), 
-									for ($i = 0; $i < 6; $i++) {
-										$rand = mt_rand(0, count($characters)-1);
-										$start .= $characters[$rand];
-									}
-									echo $start;
+									// $start = 'PTMADS';
+									// $characters = array_merge(range('0','9')); //range('A','Z'), 
+									// for ($i = 0; $i < 6; $i++) {
+									// 	$rand = mt_rand(0, count($characters)-1);
+									// 	$start .= $characters[$rand];
+									// }
+									// echo $start;
 									?>" >
-					</div>
+					</div> -->
 					<div class="form-group">
 						<label>Tangki Top</label>
-						<input name="deretTop" type="text" class="form-control" placeholder="Deret Tangki Topping">
+						<input name="deretTop" type="text" class="form-control" placeholder="Deret Tangki Topping Cth. 1-2-3">
 					</div>
 					<div class="form-group">
 						<label>Tangki Los</label>
-						<input name="deretLos" type="text" class="form-control" placeholder="Deret Tangki Lossing">
+						<input name="deretLos" type="text" class="form-control" placeholder="Deret Tangki Lossing Cth. 4-5-6">
 					</div>
 					<div class="form-group">
 						<label>Qty Top</label>
-						<input name="qtyTop" type="text" class="form-control" placeholder="Quantity Topping">
+						<input name="qtyTop" type="text" class="form-control" placeholder="Quantity Topping (L) Cth. 4500">
 					</div>	
 					<div class="form-group">
 						<label>Qty Los</label>
-						<input name="qtyLos" type="text" class="form-control" placeholder="Quantity Lossing">
+						<input name="qtyLos" type="text" class="form-control" placeholder="Quantity Lossing (L) Cth. 5600">
 					</div>	
 					<div class="form-group">
 						<label>Tangki Maint</label>
-						<input name="tankm" type="text" class="form-control" placeholder="Deret Tangki Maintenance">
+						<input name="tankm" type="text" class="form-control" placeholder="Deret Tangki Maintenance Cth. 6,7">
 					</div>																	
 					<div class="form-group">
 						<label>Refuler Maint</label>
 						<input name="refm" type="text" class="form-control" placeholder="Deret Tangki Maintenance">
-					</div>																	
+					</div>	
+					<!-- <div class="form-group">
+						<select id="multiselect-color" name="multiselect9[]" class="multiselect multiselect-custom" multiple="multiple">
+								<option value="cheese">Cheese</option>
+								<option value="tomatoes">Tomatoes</option>
+								<option value="mozarella">Mozzarella</option>
+						</select>	
+					</div>	 -->
+																			
 
 				</div>
 				<div class="modal-footer">
@@ -448,7 +462,7 @@ include 'admin/config.php';
 				<h4 class="modal-title">Plan Hari ini</h4>
 			</div>
 			<div class="modal-body">
-				<form action="tmb_brg_act.php" method="post">
+				<form action="tmb_pumpable_act.php" method="post">
 					<div class="panel-content">
 						<h2 class="heading"><i class="fa fa-database"></i> Setup Tangki</h2>
 						
@@ -459,16 +473,15 @@ include 'admin/config.php';
 							<div class="input-group">
 					
 							<span class="input-group-addon danger"><?php echo $value['tank'] ?></span>
-							<input class="form-control" type="text" value="<?php echo $value['patarget']; echo"/"; echo $value['pa']; ?>" >
+							<input name="tank<?php echo $value['id'];?>" class="form-control" type="text" value="<?php echo $value['patarget']; echo"/"; echo $value['pa']; ?>" >
 							<span class="input-group-addon danger">Liter</span>
 							</div>
 							<br>
-								
-
-							<?php
+							<?php 
 								endforeach;
 							endif;
 							?>
+
 						<div class="form-group">
 						<span class="help-block">cth. 500/2500</span>
 						<span class="help-block"> sisa 500L, dari Total Pa 2500L.</span>
@@ -492,7 +505,106 @@ include 'admin/config.php';
 		</div>
 	</div>
 </div>
-						<!-- END BOOTSTRAP PROGRESS BARS -->
+	
+
+<div id="myModalLoss" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Plan Hari ini</h4>
+			</div>
+			<div class="modal-body">
+				<form action="tmb_plan_act.php" method="post">
+					<div class="form-group">
+						<label>Plan Id</label>
+						<input name="planid" type="text" class="form-control" placeholder="Plan Id" value="<?php 
+									$start = 'PTMADS';
+									$characters = array_merge(range('0','9')); //range('A','Z'), 
+									for ($i = 0; $i < 6; $i++) {
+										$rand = mt_rand(0, count($characters)-1);
+										$start .= $characters[$rand];
+									}
+									echo $start;
+									?>" >
+					</div>
+					<div class="form-group">
+						<label>Tangki Top</label>
+						<input name="deretTop" type="text" class="form-control" placeholder="Deret Tangki Topping Cth. 1-2-3">
+					</div>
+					<div class="form-group">
+						<label>Tangki Los</label>
+						<input name="deretLos" type="text" class="form-control" placeholder="Deret Tangki Lossing Cth. 4-5-6">
+					</div>
+					<div class="form-group">
+						<label>Qty Top</label>
+						<input name="qtyTop" type="text" class="form-control" placeholder="Quantity Topping (L) Cth. 4500">
+					</div>	
+					<div class="form-group">
+						<label>Qty Los</label>
+						<input name="qtyLos" type="text" class="form-control" placeholder="Quantity Lossing (L) Cth. 5600">
+					</div>	
+					<div class="form-group">
+						<label>Tangki Maint</label>
+						<input name="tankm" type="text" class="form-control" placeholder="Deret Tangki Maintenance Cth. 6,7">
+					</div>																	
+					<div class="form-group">
+						<label>Refuler Maint</label>
+						<input name="refm" type="text" class="form-control" placeholder="Deret Tangki Maintenance">
+					</div>	
+					<!-- <div class="form-group">
+						<select id="multiselect-color" name="multiselect9[]" class="multiselect multiselect-custom" multiple="multiple">
+								<option value="cheese">Cheese</option>
+								<option value="tomatoes">Tomatoes</option>
+								<option value="mozarella">Mozzarella</option>
+						</select>	
+					</div>	 -->
+																			
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+					<input type="submit" class="btn btn-primary" value="Simpan">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<!-- <div id="myModalLoss" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Input Lossing Hari ini</h4>
+			</div>
+			<div class="modal-body">
+				<form action="tmb_loss_act.php" method="post">
+					
+					<div class="form-group">
+						<label>Quantity</label>
+						<input name="qtyLos" type="text" class="form-control" placeholder="Masukkan jumlah Liter Topping Cth. 45000">
+					</div>
+					<div class="form-group">
+						<label>Masuk Tangki</label>
+						<input name="tankLos" type="text" class="form-control" placeholder="Masukkan tangki timbun penerima Cth. 1">
+					</div>
+					<div class="form-group">
+						<label>Refuler Pengirim</label>
+						<input name="refLos" type="text" class="form-control" placeholder="Masukkan Refuler pengirim Cth. 4">
+					</div>	
+					
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+					<input type="submit" class="btn btn-primary" value="Simpan">
+				</div>
+			</form>
+		</div>
+	</div>
+</div> -->
+
+<!-- END BOOTSTRAP PROGRESS BARS -->
                         <!-- example
                     
                         <div class="input-group">
@@ -666,6 +778,57 @@ include 'admin/config.php';
 			});
 		});
 
+	</script>
+
+<script>
+	$(function() {
+
+		// Masked Inputs
+		$('#phone').mask('(999) 999-9999');
+		$('#phone-ex').mask('(999) 999-9999? x99999');
+		$('#tax-id').mask('99-9999999');
+		$('#ssn').mask('999-99-9999');
+		$('#product-key').mask('a*-999-a999');
+
+
+		// Multiselect
+		$('#multiselect1, #multiselect2, #single-selection, #multiselect5, #multiselect6').multiselect({
+			maxHeight: 300
+		});
+
+		$('#multiselect3-all').multiselect({
+			includeSelectAllOption: true,
+		});
+
+		$('#multiselect4-filter').multiselect({
+			enableFiltering: true,
+			enableCaseInsensitiveFiltering: true,
+			maxHeight: 200
+		});
+
+		$('#multiselect-size').multiselect({
+			buttonClass: 'btn btn-default btn-sm'
+		});
+
+		$('#multiselect-link').multiselect({
+			buttonClass: 'btn btn-link'
+		});
+
+		$('#multiselect-color').multiselect({
+			buttonClass: 'btn btn-primary'
+		});
+
+		$('#multiselect-color2').multiselect({
+			buttonClass: 'btn btn-success'
+		});
+
+
+		// Date picker
+		$('.inline-datepicker').datepicker({
+			todayHighlight: true
+		});
+
+	});
 	</script>
 </body>
 
