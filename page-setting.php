@@ -376,7 +376,7 @@ include 'admin/config.php';
 								
 								<div class="input-group">
 									<!-- <input type="submit" class="btn btn-info" value="Update" data-toggle="modal" data-target="#myModalLos"> -->
-									<input type="submit" class="btn btn-info" value="Update" data-toggle="modal" data-target="#myModalLoss">
+									<input type="submit" class="btn btn-info" value="Save" data-toggle="modal" data-target="#myModalLoss">
 								</div>
 								<?php
 									endforeach;
