@@ -36,8 +36,8 @@ class Topping extends DBConnect {
         GROUP BY tb_topp.id DESC');
         $sth->execute();
 
-        $data = $sth->fetchAll();
-        return $data;
+        $dataRecentTop = $sth->fetchAll();
+        return $dataRecentTop;
     }
     public function getTopActive(){
         $sth = $this->DBH->prepare('SELECT id FROM tb_tank WHERE status="201"');

@@ -14,7 +14,7 @@ require_once 'DBConnect.php';
 require_once 'topping.php';
 require_once 'tangki.php';
 $topping = new Topping();
-$data = $topping->get4();
+$dataRecentTop = $topping->get4();
 
 $topA = new Topping();
 $dataTopActive = $topA ->getTopActive();
@@ -36,6 +36,9 @@ $dataTotalLos = $totalLosF ->getTotalLos();
 
 $planthisday = new Tangki();
 $dataPlan = $planthisday->getPlan();
+
+$dataTangki = new Tangki();
+$data = $dataTangki->getAll();
 
 $tankMaint = new Topping();
 $dataTotalTankM = $tankMaint->getTotalTankM();
@@ -439,9 +442,9 @@ $dataTotalRefM = $refMaint->getTotalRefM();
 										</thead>
 										<tbody>
 											<?php
-												if (count($data)):
+												if (count($dataRecentTop)):
 													$i = 0;
-													foreach($data as $key => $value):
+													foreach($dataRecentTop as $key => $value):
 											?>
 											<tr id="<?php echo $value['id']?>">
 												<td>REF <?php echo $value['refnya']?></td>
@@ -512,13 +515,43 @@ $dataTotalRefM = $refMaint->getTotalRefM();
 
 		sparklineNumberChart();
 
-
+		<?php
+		$qcek_tank = mysql_query("select pa,tank from tb_tank");
+		if($qcek_tank!=false){
+			$num=mysql_numrows($qcek_tank);
+			$pa1=mysql_result($qcek_tank,0,"pa");
+			$pa2=mysql_result($qcek_tank,1,"pa");
+			$pa3=mysql_result($qcek_tank,2,"pa");
+			$pa4=mysql_result($qcek_tank,3,"pa");
+			$pa5=mysql_result($qcek_tank,4,"pa");
+			$pa6=mysql_result($qcek_tank,5,"pa");
+			$pa7=mysql_result($qcek_tank,6,"pa");
+			$pa8=mysql_result($qcek_tank,7,"pa");
+		
+			$t1=mysql_result($qcek_tank,0,"tank");
+			$t2=mysql_result($qcek_tank,1,"tank");
+			$t3=mysql_result($qcek_tank,2,"tank");
+			$t4=mysql_result($qcek_tank,3,"tank");
+			$t5=mysql_result($qcek_tank,4,"tank");
+			$t6=mysql_result($qcek_tank,5,"tank");
+			$t7=mysql_result($qcek_tank,6,"tank");
+			$t8=mysql_result($qcek_tank,7,"tank");
+			
+		}
+		?>
+			
 		// traffic sources
+		// var dataPie = {
+		// 	series: [24011, 45596, 58109, 57942, 99622, 0, 78053, 97520]
+		// };
+
+		// var labels = ['T01', 'T02', 'T03','T04', 'T05', 'T06','T07', 'T08'];
 		var dataPie = {
-			series: [24011, 45596, 58109, 57942, 99622, 0, 78053, 97520]
+			series: [<?php echo $pa1 ;?>, <?php echo $pa2 ;?>, <?php echo $pa3 ;?>, <?php echo $pa4 ;?>, <?php echo $pa5 ;?>, <?php echo $pa6 ;?>, <?php echo $pa7 ;?>, <?php echo $pa8 ;?>]
 		};
 
-		var labels = ['T01', 'T02', 'T03','T04', 'T05', 'T06','T07', 'T08'];
+		var labels = ['<?php echo $t1 ;?>', '<?php echo $t2 ;?>', '<?php echo $t3 ;?>','<?php echo $t4 ;?>', '<?php echo $t5 ;?>', '<?php echo $t6 ;?>','<?php echo $t7 ;?>', '<?php echo $t8 ;?>'];
+
 		var sum = function(a, b) {
 			return a + b;
 		};

@@ -13,7 +13,9 @@ require_once 'DBConnect.php';
 require_once 'tangki.php';
 $tangki = new Tangki();
 $data = $tangki->getAll();
-// $data = $tangki->getAll();
+
+$refuler = new Tangki();
+$dataRef = $refuler->getRefAll();
 
 $planthisday = new Tangki();
 $dataPlan = $planthisday->getPlan();
@@ -333,7 +335,7 @@ include 'admin/config.php';
 									<div class="input-group">
 									<!-- <input type="submit" class="btn btn-info" value="Update" data-toggle="modal" data-target="#myModalLos"> -->
 									<!-- <input type="submit" class="btn btn-info" value="Update3" data-toggle="modal" data-target="#myModalLoss"> -->
-								</div>
+									</div>
 								</div>
 								<?php
 									endforeach;
@@ -352,7 +354,6 @@ include 'admin/config.php';
 									if (count($dataLoss)):
 										foreach ($dataLoss as $key => $value):
 									?>	
-							<form action="tmb_loss_act.php" method="post">	
 								<div class="input-group">
 									<span class="input-group-btn"><button class="btn btn-warning" type="button" >Last Update</button></span>
 									<input class="form-control" type="text" value="<?php echo $value['time'] ?>" disabled>
@@ -360,33 +361,72 @@ include 'admin/config.php';
 								<br>
 								<div class="input-group">
 									<span class="input-group-btn"><button class="btn btn-warning" type="button" >Quantity</button></span>
-									<input name="qty_req" class="form-control" type="text" value="<?php echo $value['qty_req'] ?>" >
+									<input name="qty_req" class="form-control" type="text" value="<?php echo $value['qty_req'] ?>" disabled>
 								</div>
 								<br>
 								<div class="input-group">
 									<span class="input-group-btn"><button class="btn btn-warning" type="button" >Refuler</button></span>
-									<input name="ref" class="form-control" type="text" value="<?php echo $value['ref'] ?>" >
+									<input name="ref" class="form-control" type="text" value="<?php echo $value['ref'] ?>" disabled>
 								</div>
 								<br>
 								<div class="input-group">
 									<span class="input-group-btn"><button class="btn btn-warning" type="button" >Tangki</button></span>
-									<input name ="tank_tujuan" class="form-control" type="text" value="<?php echo $value['tank_tujuan'] ?>" >
+									<input name ="tank_tujuan" class="form-control" type="text" value="<?php echo $value['tank_tujuan'] ?>" disabled>
 								</div>
 								<br>
 								
 								<div class="input-group">
 									<!-- <input type="submit" class="btn btn-info" value="Update" data-toggle="modal" data-target="#myModalLos"> -->
-									<input type="submit" class="btn btn-info" value="Save" data-toggle="modal" data-target="#myModalLoss">
+									<input type="submit" class="btn btn-info" value="Update" data-toggle="modal" data-target="#myModalLoss">
 								</div>
 								<?php
 									endforeach;
 								endif;
-								?>
-								</form>		
+								?>	
 							
 										
 						</div>
 					</div>
+
+				</div>
+
+				<div class="section-heading">
+					<h1 class="page-title">Setting Refuler</h1>
+				</div>
+				<div class="row">
+
+                    <div class="col-md-3">
+						<div class="panel-content">
+							<h2 class="heading"><i class="fa fa-truck"></i> Setup Refuler</h2>
+							<?php
+									// if (count($dataRef)):
+									// 	$i = 0;
+									// 	foreach ($dataRef as $key => $value):
+									?>
+							<!-- <div class="form-group">
+									<select class="form-control" name="cmode">	
+												<option> <?php echo $value['id']?></option>
+                                    </select> -->
+								<?php
+								// if($i++ == 15) break;
+								// 	endforeach;
+								// endif;
+								?>	
+							<!-- </div> -->
+								<!-- <br> -->
+								
+							<div class="input-group">
+								<input type="submit" class="btn btn-info" value="Update" data-toggle="modal" data-target="#myModalRef">
+							</div>
+							
+						</div>
+                    </div>
+
+				</div>
+			</div>
+		</div>
+		<!-- END MAIN CONTENT -->
+
 				
 <!-- modal input -->
 <div id="myModal" class="modal fade">
@@ -432,7 +472,7 @@ include 'admin/config.php';
 					</div>																	
 					<div class="form-group">
 						<label>Refuler Maint</label>
-						<input name="refm" type="text" class="form-control" placeholder="Deret Tangki Maintenance">
+						<input name="refm" type="text" class="form-control" placeholder="Deret Refuler Maintenance Cth. 3,4">
 					</div>	
 					<!-- <div class="form-group">
 						<select id="multiselect-color" name="multiselect9[]" class="multiselect multiselect-custom" multiple="multiple">
@@ -449,6 +489,7 @@ include 'admin/config.php';
 					<input type="submit" class="btn btn-primary" value="Simpan">
 				</div>
 			</form>
+			</div>
 		</div>
 	</div>
 </div>
@@ -459,7 +500,7 @@ include 'admin/config.php';
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title">Plan Hari ini</h4>
+				<h4 class="modal-title">Setting Pumpable Tangki</h4>
 			</div>
 			<div class="modal-body">
 				<form action="tmb_pumpable_act.php" method="post">
@@ -501,7 +542,8 @@ include 'admin/config.php';
 					<button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
 					<input type="submit" class="btn btn-primary" value="Simpan">
 				</div>
-			</form>
+				</form>
+			</div>
 		</div>
 	</div>
 </div>
@@ -512,97 +554,74 @@ include 'admin/config.php';
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title">Plan Hari ini</h4>
-			</div>
-			<div class="modal-body">
-				<form action="tmb_plan_act.php" method="post">
-					<div class="form-group">
-						<label>Plan Id</label>
-						<input name="planid" type="text" class="form-control" placeholder="Plan Id" value="<?php 
-									$start = 'PTMADS';
-									$characters = array_merge(range('0','9')); //range('A','Z'), 
-									for ($i = 0; $i < 6; $i++) {
-										$rand = mt_rand(0, count($characters)-1);
-										$start .= $characters[$rand];
-									}
-									echo $start;
-									?>" >
-					</div>
-					<div class="form-group">
-						<label>Tangki Top</label>
-						<input name="deretTop" type="text" class="form-control" placeholder="Deret Tangki Topping Cth. 1-2-3">
-					</div>
-					<div class="form-group">
-						<label>Tangki Los</label>
-						<input name="deretLos" type="text" class="form-control" placeholder="Deret Tangki Lossing Cth. 4-5-6">
-					</div>
-					<div class="form-group">
-						<label>Qty Top</label>
-						<input name="qtyTop" type="text" class="form-control" placeholder="Quantity Topping (L) Cth. 4500">
-					</div>	
-					<div class="form-group">
-						<label>Qty Los</label>
-						<input name="qtyLos" type="text" class="form-control" placeholder="Quantity Lossing (L) Cth. 5600">
-					</div>	
-					<div class="form-group">
-						<label>Tangki Maint</label>
-						<input name="tankm" type="text" class="form-control" placeholder="Deret Tangki Maintenance Cth. 6,7">
-					</div>																	
-					<div class="form-group">
-						<label>Refuler Maint</label>
-						<input name="refm" type="text" class="form-control" placeholder="Deret Tangki Maintenance">
-					</div>	
-					<!-- <div class="form-group">
-						<select id="multiselect-color" name="multiselect9[]" class="multiselect multiselect-custom" multiple="multiple">
-								<option value="cheese">Cheese</option>
-								<option value="tomatoes">Tomatoes</option>
-								<option value="mozarella">Mozzarella</option>
-						</select>	
-					</div>	 -->
-																			
-
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
-					<input type="submit" class="btn btn-primary" value="Simpan">
-				</div>
-			</form>
-		</div>
-	</div>
-</div>
-
-<!-- <div id="myModalLoss" class="modal fade">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				<h4 class="modal-title">Input Lossing Hari ini</h4>
 			</div>
 			<div class="modal-body">
 				<form action="tmb_loss_act.php" method="post">
 					
-					<div class="form-group">
-						<label>Quantity</label>
-						<input name="qtyLos" type="text" class="form-control" placeholder="Masukkan jumlah Liter Topping Cth. 45000">
+					<div class="input-group">
+						<span class="input-group-btn"><button class="btn btn-warning" type="button" >Quantity</button></span>
+						<input name="qty_req" class="form-control" type="text" placeholder="Masukkan Quantity Lossing (L) cth. 2400" >
 					</div>
-					<div class="form-group">
-						<label>Masuk Tangki</label>
-						<input name="tankLos" type="text" class="form-control" placeholder="Masukkan tangki timbun penerima Cth. 1">
+					<br>
+					<div class="input-group">
+						<span class="input-group-btn"><button class="btn btn-warning" type="button" >Refuler</button></span>
+						<input name="ref" class="form-control" type="text" placeholder="Masukkan id Refuler cth. 1" >
 					</div>
-					<div class="form-group">
-						<label>Refuler Pengirim</label>
-						<input name="refLos" type="text" class="form-control" placeholder="Masukkan Refuler pengirim Cth. 4">
-					</div>	
-					
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
-					<input type="submit" class="btn btn-primary" value="Simpan">
-				</div>
-			</form>
+					<br>
+					<div class="input-group">
+						<span class="input-group-btn"><button class="btn btn-warning" type="button" >Tangki</button></span>
+						<input name ="tank_tujuan" class="form-control" type="text" placeholder="Masukkan id Tangki Timbun Tujuan  cth. 3" >
+					</div>
+					<br>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+						<input type="submit" class="btn btn-primary" value="Simpan">
+					</div>
+				</form>
+			</div>
 		</div>
 	</div>
-</div> -->
+</div>
+
+<div id="myModalRef" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Setting Refuler</h4>
+			</div>
+			<div class="modal-body">
+				<form action="tmb_ref_act.php" method="post">
+				<div class="input-group">
+						<span class="input-group-btn"><button class="btn btn-info" type="button" >Refuler Id</button></span>
+						<input name="refid" class="form-control" type="text" placeholder="Masukkan id Refuler cth. 1" >
+					</div>
+					<br>
+					<div class="input-group">
+						<span class="input-group-btn"><button class="btn btn-info" type="button" >Kode</button></span>
+						<input name="koderef" class="form-control" type="text" placeholder="Masukkan Kode Refuler cth. ADS.01" >
+					</div>
+					<br>
+					<div class="input-group">
+						<span class="input-group-btn"><button class="btn btn-info" type="button" >Max Capacity</button></span>
+						<input name ="maxcap" class="form-control" type="text" placeholder="Masukkan Kapasitas Maksimum (L) cth. 16000" >
+					</div>
+					<br>
+					<div class="input-group">
+						<span class="input-group-btn"><button class="btn btn-info" type="button" >Plat Nomor</button></span>
+						<input name ="platno" class="form-control" type="text" placeholder="Masukkan Plat Nomor  cth. AB 1234 CD" >
+					</div>
+					<br>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+						<input type="submit" class="btn btn-primary" value="Simpan">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
 
 <!-- END BOOTSTRAP PROGRESS BARS -->
                         <!-- example
@@ -700,10 +719,9 @@ include 'admin/config.php';
 							</div>
                     -->
 					
-				</div>
-			</div>
-		</div>
-		<!-- END MAIN CONTENT -->
+
+
+
 		<div class="clearfix"></div>
 		<footer>
 			<p class="copyright">&copy; 2017 <a href="#" target="_blank">Pertamina</a>. All Rights Reserved.</p>
