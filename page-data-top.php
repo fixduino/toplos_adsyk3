@@ -213,15 +213,15 @@ $dataLoss = $lossing->getAllLoss();
 		<div id="main-content">
 					<div class="container-fluid">
 						<div class="section-heading">
-							<h1 class="page-title">Data Topping</h1>
+							<h1 class="page-title">Data Topping & Lossing</h1>
 						</div>
 						<div class="row">
 							<div class="col-md-12">
 
 								<div class="panel-content">
-									<!--<h4>Detail Tangki #BAD317 7CA4DD </h4>-->
+									<h4>Data Topping </h4>
 									<div class="table-responsive">
-										<table id="display-tangki" class="table no-margin table-striped table-bordered table-hover">
+										<table id="display-topping" class="table no-margin table-striped table-bordered table-hover">
 											<thead  style="background-color:rgb(97, 201, 233);"> 
 												<tr>
 												<th>Id</th>
@@ -251,21 +251,11 @@ $dataLoss = $lossing->getAllLoss();
 										</table>
 									</div>
 								</div>
-						
-								<!-- END BOOTSTRAP PROGRESS BARS -->
-							</div>
-						</div>
-					</div>
-					<div class="section-heading">
-							<h1 class="page-title">Data Lossing</h1>
-						</div>
-						<div class="row">
 
-							<div class="col-md-12">
 								<div class="panel-content">
-									<!--<h4>Detail Tangki #BAD317 7CA4DD </h4>-->
+									<h4>Data Lossing </h4>
 									<div class="table-responsive">
-										<table id="display-tangki" class="table no-margin table-striped table-bordered table-hover">
+										<table id="display-lossing" class="table no-margin table-striped table-bordered table-hover">
 											<thead  style="background-color:rgb(218, 221, 50);"> 
 												<tr>
 												<th>Id</th>
@@ -296,9 +286,12 @@ $dataLoss = $lossing->getAllLoss();
 									</div>
 								</div>
 						
+						
+								<!-- END BOOTSTRAP PROGRESS BARS -->
 							</div>
 						</div>
 					</div>
+					
 
 		</div>
 		<!-- END MAIN CONTENT -->
@@ -361,7 +354,22 @@ $dataLoss = $lossing->getAllLoss();
 	
 	<script>
 		$(document).ready(function() {
-			$('#display-tangki').dataTable({
+			$('#display-topping').dataTable({
+				dom: 'Bfrtip',
+				buttons: [
+					'copyHtml5',
+					'excelHtml5',
+					'csvHtml5',
+					{
+						extend: 'pdfHtml5',
+						download: 'open',
+						message: 'PDF created by PDFMake with Buttons for DataTables.'
+					}
+				]
+			});
+		});
+		$(document).ready(function() {
+			$('#display-lossing').dataTable({
 				dom: 'Bfrtip',
 				buttons: [
 					'copyHtml5',
