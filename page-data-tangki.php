@@ -1,14 +1,10 @@
 <!doctype html>
 <html lang="en">
 <?php
-session_start();
-include '/admin/config.php';
-if(!isset($_SESSION['uname'])){
-	header("location:index.php");
-}
+require_once 'DBConnect.php';
+require_once 'session.php';
 
 date_default_timezone_set('Asia/Jakarta');
-require_once 'DBConnect.php';
 require_once 'tangki.php';
 $tangki = new Tangki();
 $data = $tangki->getAll();
@@ -158,21 +154,14 @@ $dataRef = $refuler->getRefAll();
 			<div class="sidebar-scroll">
 			<div class="user-account">
 			<?php 
-			$use=$_SESSION['uname'];
-			$periksatypeuser=mysql_query("select * from users where username ='$use'");
-		  
-			while($q=mysql_fetch_array($periksatypeuser)){
-				$ft=$q['foto'];
-				// $nm=$q['username'];
-				// echo '<img class="glyphicon-thumbs-down" src="foto/'.$ft.'">';	 
-			?>
-			<?php 
-			echo '<img src="assets/img/'.$ft.'" class="img-responsive img-circle user-photo" alt="User Profile Picture">';
-			}
+				$userDetails = $userClass->userDetails($session_id);
+
+				echo '<img src="assets/img/'.$userDetails->foto.'" class="img-responsive img-circle user-photo" alt="User Profile Picture">';
+			
 			?>
 
 			<div class="dropdown">
-				<a href="#" class="dropdown-toggle user-name" data-toggle="dropdown">Hello, <strong><?php echo $use; ?></strong> <i class="fa fa-caret-down"></i></a>
+				<a href="#" class="dropdown-toggle user-name" data-toggle="dropdown">Hello, <strong><?php echo $userDetails->username; ?></strong> <i class="fa fa-caret-down"></i></a>
 				<ul class="dropdown-menu dropdown-menu-right account">
 					<li><a href="#">My Profile</a></li>
 					<li><a href="#">Settings</a></li>
@@ -184,7 +173,7 @@ $dataRef = $refuler->getRefAll();
 		<nav id="left-sidebar-nav" class="sidebar-nav">
 			<ul id="main-menu" class="metismenu">
 				<li class="active">
-					<a href="index1.php" class="has-arrow"><i class="lnr lnr-home"></i> <span>Dashboard</span></a>
+					<a href="page-dashboard.php" class="has-arrow"><i class="lnr lnr-home"></i> <span>Dashboard</span></a>
 				</li>
 				<li class="">
 					<a href="page-data-tangki.php" class="has-arrow"><i class="lnr lnr lnr-drop"></i> <span>Tangki</span></a>
@@ -192,7 +181,7 @@ $dataRef = $refuler->getRefAll();
 				<li class="">
 					<a href="page-data-top.php" class="has-arrow"><i class="lnr lnr-chart-bars"></i> <span>Topping</span></a>
 				</li>
-				<?php if ($use == 'admin'){
+				<?php if ($userDetails->type == 'superuser'){
 					echo '<li class="">
 					<a href="page-setting.php" class="has-arrow" aria-expanded="false"><i class="lnr lnr-cog"></i> <span>Setting</span></a>
 				</li>';
@@ -230,7 +219,7 @@ $dataRef = $refuler->getRefAll();
 								<div id="tangki-<?php echo $value['id'] ?>" class="progress progress-striped vertical bottom wide" style="width:95px;">		
 									<div class="progress-bar progress-bar-info" data-transitiongoal="<?php echo $value['pa'] / $value['max_pa']*100 ?>" ></div>
 									<span class="nama-tangki"><?php echo '<b>'.$value['tank'].':</b>' ?></span>
-									<span class="nama-tangki"><?php echo '<b>'.$value['pa'].'</b>' ?></span>
+									<span class="nama-tangki"><?php echo '<b>'.$value['pa'].' L</b>' ?></span>
 								</div>
 								
 								<?php
@@ -264,12 +253,12 @@ $dataRef = $refuler->getRefAll();
 											<tr id="detail-tangki-<?php echo $value['id'] ?>"  class="aktiv-<?php echo $value['statusnya'] ?>">
 												<!--<td><?php //echo $value['id'] ?></td> -->
 												<td><?php echo $value['tank'] ?></td>
-												<td><?php echo $value['pa'] ?></td>
+												<td><?php echo number_format($value['pa']) ?></td>
 												<td><?php echo $value['statusnya'] ?></td>
-												<td><?php echo $value['patarget'] ?></td>
+												<td><?php echo number_format($value['patarget']) ?></td>
 												 <!-- <td><?php echo $value['level'] ?></td> -->
 												<!-- <td><?php echo $value['max_level'] ?></td> -->
-												<td><?php echo $value['max_pa'] ?></td>
+												<td><?php echo number_format($value['max_pa']) ?></td>
 												<td><?php echo $value['time'] ?></td>
 											</tr>
 										<?php
@@ -304,7 +293,7 @@ $dataRef = $refuler->getRefAll();
 												<td><?php echo $value['kode'] ?></td>
 												<td><?php echo $value['qty'] ?></td>
 												<td><?php echo $value['platref'] ?></td>
-												<td><?php if ($value['status']=='1'){echo "Active";} else { echo "Service";} ?></td>
+												<td><?php if ($value['status'] == '1'){echo "Active";} else { echo "Service";} ?></td>
 											</tr>
 										<?php
 												endforeach;

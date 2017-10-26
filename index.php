@@ -1,5 +1,25 @@
+<?php
+require_once 'DBConnect.php';
+require_once 'users.php';
+$userClass = new userClass();
 
+$errorMsgLogin = '';
+if(!empty($_POST['loginSubmit'])) {
+	$username = $_POST['username'];
+	$password = $_POST['password'];
 
+	if(strlen(trim($username))>1 && strlen(trim($password))>1) {
+		$id = $userClass->userLogin($username, $password);
+		if($id) {
+			$url=BASE_URL.'page-dashboard.php';
+			header("Location: $url");
+		}else {
+			$errorMsgLogin = "Please check Your login details.";
+		}
+	}
+}
+
+?>
 <!doctype html>
 <html lang="en" class="fullscreen-bg">
 
@@ -35,116 +55,37 @@
 	.kotak .input-group{
 		margin-bottom: 20px;
 	}
+	.errorMsg{color: #cc0000;margin-bottom: 10px}
 	</style>
 </head>
 
 <body>
 	<!-- WRAPPER -->
 	<div id="wrapper">
-		<?php 
-		if(isset($_GET['pesan'])){
-			if($_GET['pesan'] == "gagal"){
-				echo "<div style='margin-bottom:-55px' class='alert alert-danger' role='alert'><span class='glyphicon glyphicon-warning-sign'></span>  Login Gagal !! Username dan Password Salah !!</div>";
-			}
-		}
-		?>
-		<div class="vertical-align-middle">
-			<div class="vertical">
-				<div class="auth-box">
-					<div class="content">
-						<div class="header">
-							<div class="logo text-center"><img src="assets/img/logo2.png" alt="Pertamina"></div>
-							<p class="lead">Login</p>
 
-						</div>
-						<?php 
-		if(isset($_GET['pesan'])){
-			if($_GET['pesan'] == "gagal"){
-				echo "<div style='margin-bottom:-55px' class='alert alert-danger' role='alert'><span class='glyphicon glyphicon-warning-sign'></span>  Login Gagal !! Username dan Password Salah !!</div>";
-			}
-		}
-		?>
-				<!--		<form action="login_act.php" methode="post">
-							<div class="input-group">
-								<label for="signin-email" class="control-label sr-only">Username</label>
-								<input type="text" class="form-control" id="uname"  placeholder="Username">
-							</div>
-							<div class="input-group">
-								<label for="signin-password" class="control-label sr-only">Password</label>
-								<input type="password" class="form-control" id="pass" placeholder="Password">
-							</div>
-							<div class="input-group">			
-							<input type="submit" class="btn btn-primary" value="Login">
-							</div>
-							</form>
-				-->
-
-							<!--
-							<div class="form-group clearfix">
-								<label class="fancy-checkbox element-left">
-									<input type="checkbox">
-									<span>Remember me</span>
-								</label>
-								<span class="helper-text element-right">Don't have an account? <a href="page-register.html">Register</a></span>
-							</div>
-							<button type="submit" class="btn btn-primary btn-lg btn-block">LOGIN</button>
-							<div class="bottom">
-								<span class="helper-text"><i class="fa fa-lock"></i> <a href="page-forgot-password.html">Forgot password?</a></span>
-							</div> -->
-
-
-							<form action="login_act.php" method="post">
-							<div class="col-md-4 col-md-offset-4 kotak">
-								<div class="panel-heading  text-center" style="padding:15px; background:#fff;"><b>Welcome to Pertamina Adisucipto</b></div>
-								<div class="panel-body" style="background: #fff">
-									<div class="input-group">
-										<span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-										<input type="text" class="form-control" placeholder="Username" name="uname">
-									</div>
-									<br>
-									<div class="input-group">
-										<span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
-										<input type="password" class="form-control" placeholder="Password" name="pass">
-									</div>
-									<div class="input-group">			
-										<input type="submit" class="btn btn-primary" value="Login">
-									</div>
-								</div>
-							</div>
-							</form> 
-			
-						
-					</div>
+		<form method="post" action="" name="login">
+		<div class="col-md-4 col-md-offset-4 kotak">
+			<div class="panel-heading  text-center" style="padding:15px; background:#fff;"><b>Welcome to Pertamina Adisucipto</b></div>
+			<div class="panel-body" style="background: #fff">
+				<div class="input-group">
+					<span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+					<input type="text" class="form-control" placeholder="Username" name="username">
 				</div>
+				<br>
+				<div class="input-group">
+					<span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+					<input type="password" class="form-control" placeholder="Password" name="password">
+				</div>
+				<div class="input-group">
+				<div class="errorMsg"><?php echo $errorMsgLogin; ?></div>			
+				<input type="submit" class="btn btn-success" name="loginSubmit" value="Login">
+				</div>
+				<label>Don't have account yet ! <a href="sing-up.php">Sign Up</a></label>
 			</div>
 		</div>
+		</form> 
+			
 	</div>
-	<!-- END WRAPPER 
-	
-	<div class="container">
-		
-		<div class="panel panel-default">
-			<form action="login_act.php" method="post">
-				<div class="col-md-4 col-md-offset-4 kotak">
-					<div class="panel-heading  text-center" style="padding:15px; background:#fff;"><b>Welcome to PBSS Semarang</b></div>
-					 <div class="panel-body" style="background: #fff">
-						<div class="input-group">
-							<span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-							<input type="text" class="form-control" placeholder="Username" name="uname">
-						</div>
-						<div class="input-group">
-							<span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
-							<input type="password" class="form-control" placeholder="Password" name="pass">
-						</div>
-						<div class="input-group">			
-							<input type="submit" class="btn btn-primary" value="Login">
-						</div>
-					</div>
-				</div>
-			</form>
-		</div>
-	</div>
-	-->
 </body>
 
 </html>

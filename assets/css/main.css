@@ -2592,7 +2592,7 @@ ul.list-connected-app > li:first-child .connected-app {
 
 ul.list-connected-app > li:last-child .connected-app {
   border-bottom: none; }
-.aktiv-top-Active {
+.aktiv-active {
   background-color: rgb(87, 219, 87);
 }
 .aktiv-los-Active {
@@ -2605,3 +2605,10 @@ ul.list-connected-app > li:last-child .connected-app {
    background-color: rgb(34, 226, 50);
 }*/
 /*# sourceMappingURL=main.css.map */
+.progress.vertical {
+  overflow: inherit !important;
+}
+.nama-tangki {
+  position: relative;
+  bottom: -200px;
+}

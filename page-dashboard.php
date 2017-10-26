@@ -2,14 +2,11 @@
 <!doctype html>
 <html lang="en">
 <?php
-session_start();
-include '/admin/config.php';
-if(!isset($_SESSION['uname'])){
-	header("location:index.php");
-}
+require_once 'DBConnect.php';
+require_once 'session.php';
 
 date_default_timezone_set('Asia/Jakarta');
-require_once 'DBConnect.php';
+// require_once 'DBConnect.php';
 // require_once 'tangki.php';
 require_once 'topping.php';
 require_once 'tangki.php';
@@ -28,11 +25,11 @@ $dataLosActive = $losC ->getLosActive();
 $losD = new Topping();
 $dataLosLain = $losD ->getLosLain();
 
-$totalTopE = new Topping();
-$dataTotalTop = $totalTopE ->getTotalTop();
+// $totalTopE = new Topping();
+// $dataTotalTop = $topping->getTotalTop();
 
-$planthisday = new Tangki();
-$dataPlan = $planthisday->getPlan();
+// $planthisday = new Tangki();
+// $dataPlan = $planthisday->getPlan();
 
 ?>
 
@@ -73,7 +70,7 @@ $dataPlan = $planthisday->getPlan();
 				</div>
 				<!-- logo -->
 				<div class="navbar-brand">
-					<a href="index1.php"><img src="assets/img/pertamina.svg" alt="pertamina Logo" class="img-responsive logo"></a>
+					<a href="page-dashboard.php"><img src="assets/img/pertamina.svg" alt="pertamina Logo" class="img-responsive logo"></a>
 				</div>
 				<!-- end logo -->
 				<div class="navbar-right">
@@ -177,21 +174,14 @@ $dataPlan = $planthisday->getPlan();
 			<div class="sidebar-scroll">
 				<div class="user-account">
 					<?php 
-                    $use=$_SESSION['uname'];
-                    $periksatypeuser=mysql_query("select * from users where username ='$use'");
-                  
-                    while($q=mysql_fetch_array($periksatypeuser)){
-						$ft=$q['foto'];
-						// $nm=$q['username'];
-                        // echo '<img class="glyphicon-thumbs-down" src="foto/'.$ft.'">';	 
-					?>
-					<?php 
-					echo '<img src="assets/img/'.$ft.'" class="img-responsive img-circle user-photo" alt="User Profile Picture">';
-					}
+						$userDetails = $userClass->userDetails($session_id);
+
+						echo '<img src="assets/img/'.$userDetails->foto.'" class="img-responsive img-circle user-photo" alt="User Profile Picture">';
+					
 					?>
 
 					<div class="dropdown">
-						<a href="#" class="dropdown-toggle user-name" data-toggle="dropdown">Hello, <strong><?php echo $use; ?></strong> <i class="fa fa-caret-down"></i></a>
+						<a href="#" class="dropdown-toggle user-name" data-toggle="dropdown">Hello, <strong><?php echo $userDetails->username; ?></strong> <i class="fa fa-caret-down"></i></a>
 						<ul class="dropdown-menu dropdown-menu-right account">
 							<li><a href="#">My Profile</a></li>
 							<li><a href="#">Settings</a></li>
@@ -203,7 +193,7 @@ $dataPlan = $planthisday->getPlan();
 				<nav id="left-sidebar-nav" class="sidebar-nav">
 					<ul id="main-menu" class="metismenu">
 						<li class="active">
-							<a href="index1.php" class="has-arrow"><i class="lnr lnr-home"></i> <span>Dashboard</span></a>
+							<a href="page-dashboard.php" class="has-arrow"><i class="lnr lnr-home"></i> <span>Dashboard</span></a>
 						</li>
 						<li class="">
 							<a href="page-data-tangki.php" class="has-arrow"><i class="lnr lnr lnr-drop"></i> <span>Tangki</span></a>
@@ -211,21 +201,14 @@ $dataPlan = $planthisday->getPlan();
 						<li class="">
 							<a href="page-data-top.php" class="has-arrow"><i class="lnr lnr-chart-bars"></i> <span>Topping</span></a>
 						</li>
-						<?php if ($use == 'admin'){
+						<?php 
+							if ($userDetails->type == 'superuser'){
 							echo '<li class="">
 							<a href="page-setting.php" class="has-arrow" aria-expanded="false"><i class="lnr lnr-cog"></i> <span>Setting</span></a>
 						</li>';
 						} ?>
-						 <!-- <li class="">
-							<a href="page-setting.php" class="has-arrow" aria-expanded="false"><i class="lnr lnr-cog"></i> <span>Setting</span></a>
-						</li> -->
 					</ul>
 				</nav>
-				<!-- <div style="padding: 30px; text-align: center;">
-					<h2 style="font-size: 16px; margin-bottom: 15px; font-weight: 700;">Other Similar Template</h2>
-					<a href="https://www.themeineed.com/downloads/klorofil-pro-bootstrap-admin-dashboard-template/?utm_source=diffdash&utm_medium=template&utm_campaign=KlorofilPro" target="_blank"><img src="assets/img/klorofilpro.png" class="img-responsive thumbnail" alt=""></a>
-					<a href="https://www.themeineed.com/downloads/klorofil-pro-bootstrap-admin-dashboard-template/?utm_source=diffdash&utm_medium=template&utm_campaign=KlorofilPro" target="_blank" class="btn btn-primary">VIEW DEMO</a>
-				</div> -->
 			</div>
 		</div>
 		<!-- END LEFT SIDEBAR -->
@@ -250,15 +233,18 @@ $dataPlan = $planthisday->getPlan();
 							
 										<!-- <p class="text-muted"><i class="fa fa-caret-up text-success"></i> 19% compared to last week</p> -->
 									</div>
-									<?php
-									if (count($dataTotalTop)):
-										foreach ($dataTotalTop as $key => $value):
-									?>							
-										<div class="number"><span><?php echo '<b>'.$value['totaltop'].'</b>' ?> L</span> <span>Total Topping</span></div>
-									<?php
-									endforeach;
-									endif;
-									?>
+									<div class="number">
+										<?php
+										// if (count($dataTotalTop)):
+										// 	foreach ($dataTotalTop as $key => $value):
+											// $dataTotalTop['qty_total'];
+										?>							
+											<div class="number"><span> L</span> <span>Total Topping</span></div>
+										<?php
+										// 	endforeach;
+										// endif;
+										?>
+									</div>
 								</div>
 							</div>
 							<div class="col-md-3 col-sm-6">
