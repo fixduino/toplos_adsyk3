@@ -231,10 +231,10 @@ $dataRef = $refuler->getRefAll();
 						<div class="panel-content">
 							<h4>Detail Tangki</h4>
 							<div class="table-responsive">
-								<table id="display-tangki" class="table no-margin table-striped table-bordered table-hover">
+								<table id="display-tangki" class="table no-margin">
 									<thead>
 										<tr>
-										<!--<th>id</th> -->
+										<!--<th>id</th>  table-striped table-bordered table-hover -->
 										<th>Tangki</th>
 										<th>Pumpable</th>
 										<th>Status</th>

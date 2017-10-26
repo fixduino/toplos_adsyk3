@@ -8,6 +8,9 @@ date_default_timezone_set('Asia/Jakarta');
 require_once 'topping.php';
 $topping = new Topping();
 $data = $topping->getAll();
+
+$lossing = new Topping();
+$dataLoss = $lossing->getAllLoss();
 ?>
 <head>
 	<title>Dashboard | pertamina DPPU Adisucipto</title>
@@ -197,51 +200,88 @@ $data = $topping->getAll();
 		<!-- END LEFT SIDEBAR -->
 		<!-- MAIN CONTENT -->
 		<div id="main-content">
-			<div class="container-fluid">
-				<div class="section-heading">
-					<h1 class="page-title">Data Topping</h1>
-				</div>
-				<div class="row">
-					<div class="col-md-12">
+					<div class="container-fluid">
+						<div class="section-heading">
+							<h1 class="page-title">Data Topping & Lossing</h1>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
 
-						<div class="panel-content">
-							<!--<h4>Detail Tangki #BAD317 7CA4DD </h4>-->
-							<div class="table-responsive">
-								<table id="display-tangki" class="table no-margin table-striped table-bordered table-hover">
-									<thead  style="background-color:rgb(97, 201, 233);"> 
-										<tr>
-										<th>Id</th>
-										<th>Waktu</th>
-										<th>Refuler</th>
-										<th>Quantity</th>
-										<th>Tangki Asal</th>
-										</tr>
-									</thead>
-									<tbody>
-										<?php
-											if (count($data)):
-												foreach ($data as $key => $value):
-										?>
-											<tr id="detail-tangki-<?php echo $value['id'] ?>"  class="aktiv-<?php echo $value['statusnya'] ?>">
-												<td><?php echo $value['id'] ?></td>
-												<td><?php echo $value['time'] ?></td>
-												<td><?php echo $value['kode'] ?></td>
-												<td><?php echo $value['qty_req'] ?></td>
-												<td><?php echo $value['tank_asal'] ?></td>
-											</tr>
-										<?php
-												endforeach;
-											endif;
-										?>
-									</tbody>
-								</table>
+								<div class="panel-content">
+									<h4>Data Topping </h4>
+									<div class="table-responsive">
+										<table id="display-topping" class="table no-margin table-striped table-bordered table-hover">
+											<thead  style="background-color:rgb(97, 201, 233);"> 
+												<tr>
+												<th>Id</th>
+												<th>Waktu</th>
+												<th>Refuler</th>
+												<th>Quantity</th>
+												<th>Tangki Asal</th>
+												</tr>
+											</thead>
+											<tbody>
+												<?php
+													if (count($data)):
+														foreach ($data as $key => $value):
+												?>
+													<tr id="detail-tangki-<?php echo $value['id'] ?>"  class="aktiv-<?php echo $value['statusnya'] ?>">
+														<td><?php echo $value['id'] ?></td>
+														<td><?php echo $value['time'] ?></td>
+														<td><?php echo $value['kode'] ?></td>
+														<td><?php echo $value['qty_req'] ?></td>
+														<td><?php echo $value['tank_asal'] ?></td>
+													</tr>
+												<?php
+														endforeach;
+													endif;
+												?>
+											</tbody>
+										</table>
+									</div>
+								</div>
+
+								<div class="panel-content">
+									<h4>Data Lossing </h4>
+									<div class="table-responsive">
+										<table id="display-lossing" class="table no-margin table-striped table-bordered table-hover">
+											<thead  style="background-color:rgb(218, 221, 50);"> 
+												<tr>
+												<th>Id</th>
+												<th>Waktu</th>
+												<th>Refuler</th>
+												<th>Quantity</th>
+												<th>Tangki Tujuan</th>
+												</tr>
+											</thead>
+											<tbody>
+												<?php
+													if (count($dataLoss)):
+														foreach ($dataLoss as $key => $value):
+												?>
+													<tr id="detail-tangki-<?php echo $value['id'] ?>"  class="aktiv-<?php echo $value['statusnya'] ?>">
+														<td><?php echo $value['id'] ?></td>
+														<td><?php echo $value['time'] ?></td>
+														<td><?php echo $value['kode'] ?></td>
+														<td><?php echo $value['qty_req'] ?></td>
+														<td><?php echo $value['tank_tujuan'] ?></td>
+													</tr>
+												<?php
+														endforeach;
+													endif;
+												?>
+											</tbody>
+										</table>
+									</div>
+								</div>
+						
+						
+								<!-- END BOOTSTRAP PROGRESS BARS -->
 							</div>
 						</div>
-				
-						<!-- END BOOTSTRAP PROGRESS BARS -->
 					</div>
-				</div>
-			</div>
+					
+
 		</div>
 		<!-- END MAIN CONTENT -->
 		<div class="clearfix"></div>
@@ -303,7 +343,22 @@ $data = $topping->getAll();
 	
 	<script>
 		$(document).ready(function() {
-			$('#display-tangki').dataTable({
+			$('#display-topping').dataTable({
+				dom: 'Bfrtip',
+				buttons: [
+					'copyHtml5',
+					'excelHtml5',
+					'csvHtml5',
+					{
+						extend: 'pdfHtml5',
+						download: 'open',
+						message: 'PDF created by PDFMake with Buttons for DataTables.'
+					}
+				]
+			});
+		});
+		$(document).ready(function() {
+			$('#display-lossing').dataTable({
 				dom: 'Bfrtip',
 				buttons: [
 					'copyHtml5',

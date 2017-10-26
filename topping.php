@@ -16,19 +16,28 @@ class Topping {
         $db = getDB();
         $sth = $db->prepare('SELECT tb_topp.*, tb_ref.kode AS kode FROM tb_topp
         INNER JOIN tb_ref ON tb_topp.ref = tb_ref.id
-         GROUP BY tb_topp.id');
+         GROUP BY tb_topp.id DESC');
         $sth->execute();
 
         $data = $sth->fetchAll();
         return $data;
+    }
+    public function getAllLoss(){
+        $sth = $this->DBH->prepare('SELECT tb_loss.*, tb_ref.kode AS kode FROM tb_loss
+        INNER JOIN tb_ref ON tb_loss.ref = tb_ref.id
+         GROUP BY tb_loss.id DESC');
+        $sth->execute();
+
+        $dataLoss = $sth->fetchAll();
+        return $dataLoss;
     }
     public function get4(){
         $db = getDB();
         $sth = $db->prepare('SELECT id,time,ref,qty_req,tank_asal FROM tb_topp ORDER BY id DESC');
         $sth->execute();
 
-        $data = $sth->fetchAll();
-        return $data;
+        $dataRecentTop = $sth->fetchAll();
+        return $dataRecentTop;
     }
     public function getTopActive(){
         $db = getDB();
@@ -53,6 +62,20 @@ class Topping {
 
         $dataLosActive = $sth->fetchAll();
         return $dataLosActive;
+    }
+    public function getTotalTankM(){
+        $sth = $this->DBH->prepare('SELECT count(*) as totTankM FROM tb_tank WHERE status="99"');
+        $sth->execute();
+
+        $dataTotalTankM = $sth->fetchAll();
+        return $dataTotalTankM;
+    }
+    public function getTotalRefM(){
+        $sth = $this->DBH->prepare('SELECT count(*) as totRefM FROM tb_ref WHERE status="0"');
+        $sth->execute();
+
+        $dataTotalRefM = $sth->fetchAll();
+        return $dataTotalRefM;
     }
     public function getLosLain(){
         $db = getDB();
@@ -86,9 +109,10 @@ class Topping {
         FROM tb_los');
         $sth->execute();
 
-        $dataTotalLos= $sth->fetchAll();
+        $dataTotalLos = $sth->fetchAll();
         return $dataTotalLos;
     }
+   
     public function get($id) {
         $db = getDB();
         $sth = $db->prepare('SELECT id,time,ref,qty_req,tank_asal Form tb_topp');
